@@ -1,0 +1,49 @@
+# start mongodb
+brew services start mongodb-community@4.0
+
+# connect to the local database on the default port 27017
+mongo
+
+# create a database called assignment
+use assignment
+
+# create collection called users
+db.createCollection("users")
+
+# insert 10 documents in users collection using both insert and insertMany
+db.users.insert({"first_name":"A","last_name":"a","email":"a@.com","gender":"unassigned","ip_address":"000:00:00:0","age":"27"})
+
+db.users.insertMany([
+{"first_name":"B","last_name":"b","email":"b@.com","gender":"unassigned","ip_address":"000:00:00:0","age":"21"},{"first_name":"C","last_name":"c","email":"c@.com","gender":"unassigned","ip_address":"000:00:00:0","age":"24"},{"first_name":"D","last_name":"d","email":"d@.com","gender":"unassigned","ip_address":"000:00:00:0","age":"23"},{"first_name":"E","last_name":"e","email":"e@.com","gender":"unassigned","ip_address":"000:00:00:0","age":"29"},
+{"first_name":"F","last_name":"f","email":"f@.com","gender":"unassigned","ip_address":"000:00:00:0","age":"21"},
+{"first_name":"G","last_name":"g","email":"g@.com","gender":"unassigned","ip_address":"000:00:00:0","age":"22"},
+{"first_name":"H","last_name":"h","email":"h@.com","gender":"unassigned","ip_address":"000:00:00:0","age":"26"},
+{"first_name":"I","last_name":"i","email":"i@.com","gender":"unassigned","ip_address":"000:00:00:0","age":"29"},
+{"first_name":"J","last_name":"j","email":"j@.com","gender":"unassigned","ip_address":"000:00:00:0","age":"25"}
+])
+
+# select all the documents in the users collection using find and also a single document using findOne
+db.users.find({})
+
+db.users.findOne({"_id" : ObjectId("622718c2b9a9a4506aa75605")})
+
+# update 3 documents using update and updateMany
+db.users.update({"_id" : ObjectId("622718c2b9a9a4506aa75605")},{$set:{"gender" : "female"}})
+
+db.users.updateMany({"age":"21"},{$set:{"generation":"Gen-Z"}})
+
+# delete documents using remove, deleteOne, deleteMany
+db.users.remove({"_id" : ObjectId("622715a9b9a9a4506aa755fc")})
+
+db.users.deleteOne({"age":"29"})
+
+db.users.deleteMany({"age":"21"})
+
+# delete database
+db.dropDatabase()
+
+# exiting the shell
+^C
+
+# stop mongodb
+brew services stop mongodb-community@4.0
