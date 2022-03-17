@@ -11,13 +11,15 @@ router.get("/", async (req,res) => {
     } catch (err) {
         res.status(500).send(err);
     }
-})
+});
 
 router.post("/",
-    body('first_name').not().isEmpty(),
-    body('last_name').not().isEmpty(),
-    body('email').not().isEmpty().isEmail(),
-    body('pincode').isNumeric().isLength({min: 6, max: 6}),
+    body('first_name').not().isEmpty().withMessage("First Name is required"),
+    body('last_name').not().isEmpty().withMessage("Last Message is required"),
+    body('email').not().isEmpty().withMessage("Email is required")
+        .isEmail().withMessage("Please provide valid email"),
+    body('pincode').isNumeric().withMessage("Pincode should be a number")
+        .isLength({min: 6, max: 6}).withMessage("Please provide valid pincode"),
     body('age').isNumeric().custom((val) => {
         if (val < 1 || val > 100) {
             throw new Error("Please provide valid age");
@@ -37,6 +39,7 @@ router.post("/",
         } catch (err) {
             return res.status(500).send({error: err});
         }
-});
+    }
+);
 
 module.exports = router;
