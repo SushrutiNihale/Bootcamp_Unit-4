@@ -12,4 +12,9 @@ const userSchema = new mongoose.Schema(
     }
 );
 
+userSchema.pre("save", () => {
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hash = bcrypt.hashSync(myPlaintextPassword, salt);
+})
+
 module.exports = mongoose.model("user", userSchema);
