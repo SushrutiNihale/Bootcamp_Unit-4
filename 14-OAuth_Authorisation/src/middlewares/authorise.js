@@ -9,11 +9,6 @@ const authorise = async(req,res,next) => {
             return next();
         }
         return res.status(401).send({message : "You are not authorised to perform this operation"});
-        // console.log(req.params.productId);
-        // console.log(typeof(product.user_id),product.user_id.toString());
-        // console.log(req.userID); // getting userID as established in authenticate middleware
-        // console.log(req.userID === product.user_id.toString());
-        // return next();
     } catch(err) {
         return res.status(500).send(err);
     }

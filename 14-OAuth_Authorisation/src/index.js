@@ -26,8 +26,15 @@ app.get('/auth/google',
 app.get( '/auth/google/callback',
 	passport.authenticate( 'google', {
 		successRedirect: '/auth/google/success',
-		failureRedirect: '/auth/google/failure'
-}));
+		failureRedirect: '/login',
+        session: false // no need for session since we are using tokens
+    }),
+
+    (req,res) => {
+        const token = generateToken(req.user)
+        return res.status(200).send({user:req.user, token})
+    }
+);
 
 app.listen(5000, async () => {
     try{
