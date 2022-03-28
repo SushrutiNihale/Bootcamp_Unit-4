@@ -6,9 +6,9 @@ const authorise = require("../middlewares/authorise");
 
 const Todo = require("../models/todo.models");
 
-router.get("/:userId", authenticate, async(req,res) => {
+router.get("", authenticate, async(req,res) => {
     try{
-        const todos = await Todo.find({userId: req.params.userId});
+        const todos = await Todo.find({userId: req.userId});
         return res.status(200).send(todos);
     } catch(err) {
         return res.status(500).send(err);
